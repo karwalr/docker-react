@@ -1,3 +1,4 @@
+#Use the dockerfile.dev to fire up docker, build it and run the tests
 sudo: required
 services:
   - docker
@@ -7,3 +8,16 @@ before_install:
   #each of these will be watched for a status
 script:
   - docker run rajkarwal/docker-react npm run test -- --coverage
+
+deploy:
+  provider: elasticbeanstalk
+  region: 'eu-west-1'
+  app: 'docker-react'
+  env: 'DockerReact-env'
+  bucket_name: 'elasticbeanstalk-eu-west-1-630129900599' #autocreated by elb
+  bucket_path: 'docker-react' #folder within the s3 bucket
+  on:
+    branch: master #only master commits
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: '$AWS_SECRET_KEY'
