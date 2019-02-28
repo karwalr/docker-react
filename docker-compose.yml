@@ -1,0 +1,20 @@
+version: '3'
+services:
+  web:
+    #build: . # wont work as we have a .dev file.
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - '3000:3000'
+    volumes:
+      - /app/node_modules #will ignore/bookmark
+      - .:/app #reference current folder into app.
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules #will ignore/bookmark
+      - .:/app #reference current folder into app.
+    command: ['npm', 'run', 'test']
