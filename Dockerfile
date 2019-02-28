@@ -10,6 +10,9 @@ RUN npm run build
 
 #RUN PHASE. Copies everything over from the builder phase.
 FROM nginx
+#Expose is only necessary for Elastic Beanstalk to open up the port mapping.
+#Doesnt do anything locally!
+EXPOSE 80
 COPY default.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/build /usr/share/nginx/html
 
