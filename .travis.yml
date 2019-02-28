@@ -1,0 +1,9 @@
+sudo: required
+services:
+  - docker
+before_install:
+  - docker build -t rajkarwal/docker-react -f Dockerfile.dev . #tagged image so we dont have to use the ID
+
+  #each of these will be watched for a status
+script:
+  - docker run rajkarwal/docker-react npm run test -- --coverage
